@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+.mypy_cache/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Node / frontend
+node_modules/
+dist/
+build/
+
+# Data (regenerated via data/scripts/, not committed)
+data/raw/
+data/processed/
+
+# Model checkpoints (Module 2)
+models/checkpoints/
+*.pt
+*.pth
+*.ckpt
+
+# Environment / secrets
+.env
+.env.*
+*.pem
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/

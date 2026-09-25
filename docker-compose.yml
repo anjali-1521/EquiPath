@@ -1,0 +1,18 @@
+# Placeholder — service definitions to be filled in as app/backend and
+# app/frontend (Module 4) are implemented.
+version: "3.9"
+
+services:
+  backend:
+    build: ./app/backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data/processed:/app/data/processed:ro
+
+  frontend:
+    build: ./app/frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend

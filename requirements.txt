@@ -1,0 +1,12 @@
+# Data & Knowledge Graph (Module 1)
+networkx
+pandas
+
+# Embeddings & Prediction (Module 2)
+pykeen
+torch
+
+# Application (Module 4)
+fastapi
+uvicorn[standard]
+pydantic

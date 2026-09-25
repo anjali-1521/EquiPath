@@ -1,0 +1,71 @@
+equipath/
+├── README.md
+├── requirements.txt
+├── .gitignore
+├── docker-compose.yml
+│
+├── docs/
+│   ├── setup.md
+│   ├── architecture.md
+│   ├── literature_review.md
+│   └── diagrams/
+│       ├── hld.png
+│       ├── lld.png
+│       └── class_diagram.png
+│
+├── data/                          # Module 1 — Ruchira
+│   ├── raw/
+│   │   └── hetionet/               # downloaded, gitignored
+│   ├── custom_nodes/
+│   │   ├── wilsons_disease.json
+│   │   ├── sca3.json
+│   │   ├── ashermans_syndrome.json
+│   │   └── mrkh_syndrome.json
+│   ├── processed/                  # merged graph, gitignored
+│   └── scripts/
+│       ├── download_hetionet.py
+│       ├── build_custom_nodes.py
+│       └── merge_graph.py
+│
+├── models/                        # Module 2 — Anjali
+│   ├── embeddings/
+│   │   ├── transe.py
+│   │   └── graphsage.py
+│   ├── prediction/
+│   │   ├── repurposing.py
+│   │   └── ddi.py
+│   ├── training/
+│   │   └── train.py
+│   ├── evaluation/
+│   │   └── metrics.py              # Hits@k, Mean Rank
+│   └── checkpoints/                 # gitignored
+│
+├── explanation/                   # Module 3 — Husaina
+│   ├── neglect_ranking.py
+│   ├── explanation_path.py
+│   └── tests/
+│       └── test_ranking.py
+│
+├── app/                            # Module 4 — Aaditi
+│   ├── backend/
+│   │   ├── main.py                 # FastAPI entrypoint
+│   │   ├── routes/
+│   │   │   ├── repurposing.py
+│   │   │   ├── ddi.py
+│   │   │   └── patient_safety.py
+│   │   └── Dockerfile
+│   └── frontend/
+│       ├── src/
+│       │   ├── components/
+│       │   ├── views/
+│       │   │   ├── ClinicianView.jsx
+│       │   │   └── ResearcherView.jsx
+│       │   └── App.jsx
+│       ├── package.json
+│       └── Dockerfile
+│
+├── tests/                          # cross-module integration tests
+│   └── test_end_to_end.py
+│
+└── notebooks/                      # exploratory/scratch work
+    └── sanity_check_wilsons.ipynb

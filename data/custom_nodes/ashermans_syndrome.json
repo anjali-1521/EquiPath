@@ -1,0 +1,84 @@
+{
+  "_comment": "Asherman's syndrome is acquired/structural, not monogenic - no Disease-associates-Gene edge is added. Modeled instead via Disease-localizes-Anatomy and Disease-presents-Symptom edges, using Hetionet's real metaedge for disease-anatomy relationships (DlA, 'localizes') rather than a generic 'associates' label, since Hetionet has no Disease-associates-Anatomy metaedge. No approved pharmacological treatment exists (management is surgical, e.g. hysteroscopic adhesiolysis), so no Compound-treats-Disease edge either. This node is legitimately sparser than the others.",
+  "disease": "Asherman's syndrome",
+  "confirmed_absent_from_hetionet": true,
+  "node": {
+    "id": "Disease::CUSTOM:ashermans_syndrome",
+    "name": "Asherman's syndrome",
+    "kind": "Disease",
+    "source": "custom",
+    "identifiers": {
+      "mesh": "D017698",
+      "orphanet": "180059"
+    },
+    "notes": "Acquired condition: intrauterine adhesions/fibrosis, typically following uterine surgery (e.g. dilation and curettage) or infection. Not a primarily genetic disease and has no single causal gene. Not present in Hetionet v1.0's 137-disease set."
+  },
+  "supporting_nodes": [
+    {
+      "id": "Anatomy::UBERON:0000995",
+      "name": "uterus",
+      "kind": "Anatomy",
+      "source": "hetionet_existing",
+      "notes": "Reused directly from Hetionet v1.0 (already present as UBERON:0000995)."
+    },
+    {
+      "id": "Anatomy::UBERON:0001295",
+      "name": "endometrium",
+      "kind": "Anatomy",
+      "source": "hetionet_existing",
+      "notes": "Reused directly from Hetionet v1.0 (already present as UBERON:0001295). Primary site of the intrauterine adhesions/scarring."
+    },
+    {
+      "id": "Symptom::CUSTOM:infertility",
+      "name": "Infertility",
+      "kind": "Symptom",
+      "source": "custom",
+      "notes": "Not present in Hetionet v1.0's 438-symptom MeSH-derived set. Common presenting symptom of Asherman's syndrome due to obliteration of the endometrial cavity."
+    },
+    {
+      "id": "Symptom::CUSTOM:amenorrhea",
+      "name": "Amenorrhea",
+      "kind": "Symptom",
+      "source": "custom",
+      "notes": "Not present in Hetionet v1.0's 438-symptom MeSH-derived set (closest existing term is Symptom::D004412 Dysmenorrhea, which is distinct). Common presenting symptom of Asherman's syndrome, particularly with severe adhesions."
+    }
+  ],
+  "edges": [
+    {
+      "source": "Disease::CUSTOM:ashermans_syndrome",
+      "target": "Anatomy::UBERON:0000995",
+      "metaedge": "DlA",
+      "type": "localizes",
+      "description": "Disease - localizes - Anatomy",
+      "evidence": "Asherman's syndrome is defined by intrauterine adhesions within the uterine cavity."
+    },
+    {
+      "source": "Disease::CUSTOM:ashermans_syndrome",
+      "target": "Anatomy::UBERON:0001295",
+      "metaedge": "DlA",
+      "type": "localizes",
+      "description": "Disease - localizes - Anatomy",
+      "evidence": "The adhesions/fibrosis characteristic of Asherman's syndrome form on and replace the functional endometrial lining."
+    },
+    {
+      "source": "Disease::CUSTOM:ashermans_syndrome",
+      "target": "Symptom::CUSTOM:infertility",
+      "metaedge": "DpS",
+      "type": "presents",
+      "description": "Disease - presents - Symptom",
+      "evidence": "Infertility is a leading presenting complaint in Asherman's syndrome, due to impaired implantation and endometrial cavity distortion."
+    },
+    {
+      "source": "Disease::CUSTOM:ashermans_syndrome",
+      "target": "Symptom::CUSTOM:amenorrhea",
+      "metaedge": "DpS",
+      "type": "presents",
+      "description": "Disease - presents - Symptom",
+      "evidence": "Hypomenorrhea/amenorrhea is a classic presenting symptom, especially in moderate-to-severe cases."
+    }
+  ],
+  "deliberately_omitted": {
+    "disease_associates_gene": "Asherman's syndrome is an acquired, structural condition (post-surgical/infectious intrauterine scarring), not a monogenic or strongly polygenic disease - no defensible single-gene association exists to cite.",
+    "compound_treats_disease": "No approved pharmacological treatment exists. Standard of care is surgical (hysteroscopic adhesiolysis), sometimes with post-operative estrogen to promote re-epithelialization - not a disease-modifying compound therapy in the sense Hetionet's CtD edges represent."
+  }
+}

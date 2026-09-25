@@ -1,0 +1,38 @@
+{
+  "_comment": "SCA3 deliberately has NO Compound-treats-Disease edge: no disease-modifying therapy exists, only symptomatic management (e.g. physiotherapy, antispasmodics for symptoms, not the disease itself). This is intentional, not a gap in data collection.",
+  "disease": "Spinocerebellar Ataxia Type 3 / Machado-Joseph Disease (SCA3)",
+  "confirmed_absent_from_hetionet": true,
+  "node": {
+    "id": "Disease::CUSTOM:sca3",
+    "name": "Spinocerebellar ataxia type 3 (Machado-Joseph disease)",
+    "kind": "Disease",
+    "source": "custom",
+    "identifiers": {
+      "omim": "109150",
+      "mesh": "D016892"
+    },
+    "notes": "Autosomal dominant, CAG-repeat-expansion neurodegenerative ataxia; most common dominantly inherited spinocerebellar ataxia worldwide. Not present in Hetionet v1.0's 137-disease set."
+  },
+  "supporting_nodes": [
+    {
+      "id": "Gene::SYMBOL:ATXN3",
+      "name": "ATXN3",
+      "kind": "Gene",
+      "source": "custom",
+      "notes": "Ataxin-3, a ubiquitin hydrolase (deubiquitinase). CAG-repeat expansion in the coding region (>52 repeats in affected individuals, vs up to 44 in unaffected) causes an expanded polyglutamine tract. Located on chromosome 14q32.1."
+    }
+  ],
+  "edges": [
+    {
+      "source": "Disease::CUSTOM:sca3",
+      "target": "Gene::SYMBOL:ATXN3",
+      "metaedge": "DaG",
+      "type": "associates",
+      "description": "Disease - associates - Gene",
+      "evidence": "CAG-repeat expansion in ATXN3 is the established monogenic cause of SCA3/Machado-Joseph disease (OMIM #109150)."
+    }
+  ],
+  "deliberately_omitted": {
+    "compound_treats_disease": "No disease-modifying or curative treatment exists for SCA3. Management is purely symptomatic (e.g. physical/occupational therapy for gait and coordination, botulinum toxin for spasticity/dystonia). No Compound-treats-Disease edge is added, since 'treats' in this schema denotes treatment of the disease itself, not symptom palliation."
+  }
+}

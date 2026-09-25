@@ -1,0 +1,68 @@
+{
+  "_comment": "MRKH's candidate gene WNT4 is NOT fully confirmed - most MRKH patients have no identified WNT4 mutation, and this is explicitly noted below rather than asserted as a settled fact. Anatomy edges use Hetionet's real DlA ('localizes') metaedge rather than a generic 'associates' label, since Hetionet has no Disease-associates-Anatomy metaedge. No approved pharmacological treatment exists (management is surgical/psychological), so no Compound-treats-Disease edge is added.",
+  "disease": "Mayer-Rokitansky-Kuster-Hauser syndrome (MRKH)",
+  "confirmed_absent_from_hetionet": true,
+  "node": {
+    "id": "Disease::CUSTOM:mrkh_syndrome",
+    "name": "Mayer-Rokitansky-Kuster-Hauser syndrome",
+    "kind": "Disease",
+    "source": "custom",
+    "identifiers": {
+      "omim": "277000",
+      "orphanet": "3437"
+    },
+    "notes": "Congenital absence/hypoplasia of the uterus and upper two-thirds of the vagina (Mullerian agenesis) in individuals with a typical female karyotype (46,XX). Not present in Hetionet v1.0's 137-disease set."
+  },
+  "supporting_nodes": [
+    {
+      "id": "Gene::SYMBOL:WNT4",
+      "name": "WNT4",
+      "kind": "Gene",
+      "source": "custom",
+      "notes": "CANDIDATE gene, not a confirmed monogenic cause. WNT4 variants have been reported in only a small subset of MRKH cases (some associated with a hyperandrogenism variant), and most individuals with MRKH have no identified WNT4 mutation. Included here as an evidence-based candidate association, explicitly flagged as unconfirmed rather than causal."
+    },
+    {
+      "id": "Anatomy::UBERON:0000995",
+      "name": "uterus",
+      "kind": "Anatomy",
+      "source": "hetionet_existing",
+      "notes": "Reused directly from Hetionet v1.0 (already present as UBERON:0000995)."
+    },
+    {
+      "id": "Anatomy::UBERON:0000996",
+      "name": "vagina",
+      "kind": "Anatomy",
+      "source": "hetionet_existing",
+      "notes": "Reused directly from Hetionet v1.0 (already present as UBERON:0000996)."
+    }
+  ],
+  "edges": [
+    {
+      "source": "Disease::CUSTOM:mrkh_syndrome",
+      "target": "Gene::SYMBOL:WNT4",
+      "metaedge": "DaG",
+      "type": "associates",
+      "description": "Disease - associates - Gene",
+      "evidence": "UNCONFIRMED / candidate association only. WNT4 sequence variants have been reported in a minority of MRKH cases in the literature; causality is not established for the majority of patients, most of whom have no WNT4 mutation. This edge should be treated as lower-confidence than the Wilson's/SCA3 gene edges."
+    },
+    {
+      "source": "Disease::CUSTOM:mrkh_syndrome",
+      "target": "Anatomy::UBERON:0000995",
+      "metaedge": "DlA",
+      "type": "localizes",
+      "description": "Disease - localizes - Anatomy",
+      "evidence": "MRKH is defined by congenital uterine agenesis/hypoplasia."
+    },
+    {
+      "source": "Disease::CUSTOM:mrkh_syndrome",
+      "target": "Anatomy::UBERON:0000996",
+      "metaedge": "DlA",
+      "type": "localizes",
+      "description": "Disease - localizes - Anatomy",
+      "evidence": "MRKH also involves aplasia of the upper two-thirds of the vagina."
+    }
+  ],
+  "deliberately_omitted": {
+    "compound_treats_disease": "No approved pharmacological treatment exists. Standard management is surgical (e.g. vaginal dilation therapy, neovaginoplasty) and psychological support - not a disease-modifying compound therapy in the sense Hetionet's CtD edges represent."
+  }
+}

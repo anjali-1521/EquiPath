@@ -1,0 +1,80 @@
+{
+  "_comment": "Wilson's disease is the SANITY-CHECK case for the custom-node pipeline: unlike the other 3 diseases here, it already has approved treatments, so it should end up with real Compound-treats-Disease edges after merge.",
+  "disease": "Wilson's disease",
+  "confirmed_absent_from_hetionet": true,
+  "node": {
+    "id": "Disease::CUSTOM:wilsons_disease",
+    "name": "Wilson's disease",
+    "kind": "Disease",
+    "source": "custom",
+    "identifiers": {
+      "omim": "277900",
+      "mesh": "D006527"
+    },
+    "notes": "Autosomal recessive disorder of copper metabolism causing hepatic and neuropsychiatric copper toxicosis. Not present in Hetionet v1.0's 137-disease set."
+  },
+  "supporting_nodes": [
+    {
+      "id": "Gene::SYMBOL:ATP7B",
+      "name": "ATP7B",
+      "kind": "Gene",
+      "source": "custom",
+      "notes": "Copper-transporting P-type ATPase (ATPase copper transporting beta), chromosome 13q14.3. NCBI Gene ID 540. The sole gene causally associated with Wilson's disease."
+    },
+    {
+      "id": "Compound::DB00859",
+      "name": "Penicillamine",
+      "kind": "Compound",
+      "source": "hetionet_existing",
+      "notes": "Already present in Hetionet v1.0 as Compound::DB00859, not previously linked to Wilson's disease. Copper-chelating agent; first-line therapy since the 1950s-60s."
+    },
+    {
+      "id": "Compound::CUSTOM:trientine",
+      "name": "Trientine",
+      "kind": "Compound",
+      "source": "custom",
+      "notes": "Triethylenetetramine (brand names Syprine, Cuvrior). Not present in Hetionet v1.0's compound set. Copper chelator, alternative to penicillamine for patients intolerant of it. DrugBank ID (approx.): DB06824 - not used as the node ID here since it is not verified against Hetionet's own DrugBank vocabulary snapshot."
+    },
+    {
+      "id": "Compound::CUSTOM:zinc_acetate",
+      "name": "Zinc acetate",
+      "kind": "Compound",
+      "source": "custom",
+      "notes": "Brand name Galzin (US) / Wilzin (EU), FDA-approved 1997. Not present in Hetionet v1.0's compound set. Blocks intestinal copper absorption via metallothionein induction; used for maintenance therapy and in pre-symptomatic/pregnant patients."
+    }
+  ],
+  "edges": [
+    {
+      "source": "Disease::CUSTOM:wilsons_disease",
+      "target": "Gene::SYMBOL:ATP7B",
+      "metaedge": "DaG",
+      "type": "associates",
+      "description": "Disease - associates - Gene",
+      "evidence": "ATP7B loss-of-function variants are the established monogenic cause of Wilson's disease (OMIM #277900)."
+    },
+    {
+      "source": "Compound::DB00859",
+      "target": "Disease::CUSTOM:wilsons_disease",
+      "metaedge": "CtD",
+      "type": "treats",
+      "description": "Compound - treats - Disease",
+      "evidence": "Penicillamine is FDA-approved and first-line copper-chelation therapy for Wilson's disease."
+    },
+    {
+      "source": "Compound::CUSTOM:trientine",
+      "target": "Disease::CUSTOM:wilsons_disease",
+      "metaedge": "CtD",
+      "type": "treats",
+      "description": "Compound - treats - Disease",
+      "evidence": "Trientine is FDA-approved copper-chelation therapy for Wilson's disease, typically second-line to penicillamine."
+    },
+    {
+      "source": "Compound::CUSTOM:zinc_acetate",
+      "target": "Disease::CUSTOM:wilsons_disease",
+      "metaedge": "CtD",
+      "type": "treats",
+      "description": "Compound - treats - Disease",
+      "evidence": "Zinc acetate (Galzin) is FDA-approved for maintenance therapy of Wilson's disease."
+    }
+  ]
+}

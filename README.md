@@ -19,7 +19,7 @@ More context on the problem this solves, the literature it's built on, and the f
 | Explanation & Neglect-Ranking | Husaina | Path-based explanation, equity-aware re-ranking |
 | Application | Aaditi | Backend API, frontend, patient safety filtering |
 
-Guide: Suja Panicker
+Guide: Dr. Suja Panicker
 
 ## Status
 

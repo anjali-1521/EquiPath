@@ -5,6 +5,8 @@ pandas
 # Embeddings & Prediction (Module 2)
 pykeen
 torch
+torch-geometric
+scikit-learn
 
 # Application (Module 4)
 fastapi

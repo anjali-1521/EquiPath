@@ -23,26 +23,26 @@ Guide: Dr. Suja Panicker
 
 ## Status
 
-🚧 Implementation in progress. See [Issues](../../issues) and [Project board](../../projects) for current phase.
+All four modules are implemented, each on its own branch (merge order: `module-1-data-kg` -> `module-2-embeddings` -> `module-3-explanation` -> `module-4-app`). See [`docs/architecture.md`](./docs/architecture.md) for measured results and, importantly, the limitations: rare-disease model rankings are weak and are flagged as such in the API and UI.
 
 ## Quick start
 
 ```bash
-git clone https://github.com/<org>/equipath.git
-cd equipath
-python -m venv venv
-source venv/bin/activate  # or venv\Scripts\activate on Windows
-pip install -r requirements.txt --break-system-packages
+git clone https://github.com/anjali-1521/EquiPath.git
+cd EquiPath
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt   # install torch from the CPU index first if you want a smaller build
 ```
 
-See [`/docs/setup.md`](./docs/setup.md) for full environment setup, including the knowledge graph download step.
+The data and trained checkpoints are not committed (they are large and reproducible). [`docs/setup.md`](./docs/setup.md) lists the commands to download Hetionet, build the graph, train the models, run the tests, and start the app (`uvicorn app.backend.main:app`, UI at http://localhost:8000).
 
 ## Tech stack
 
 - **Data/Graph:** Hetionet, NetworkX
 - **Embeddings:** PyKEEN (TransE), PyTorch Geometric or DGL (GraphSAGE)
 - **Backend:** FastAPI
-- **Frontend:** React
+- **Frontend:** dependency-free static HTML/JS served by the API (no build step)
 - **Deployment:** Docker, Render/Railway
 
 ## Repository structure

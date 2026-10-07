@@ -1,18 +1,13 @@
-# Placeholder — service definitions to be filled in as app/backend and
-# app/frontend (Module 4) are implemented.
-version: "3.9"
-
+# Single service: the API also serves the static frontend (app/frontend) at "/".
+# Data and trained checkpoints are NOT baked into the image - generate them first
+# (see docs/setup.md) and they are mounted read-only below.
 services:
-  backend:
-    build: ./app/backend
+  equipath:
+    build:
+      context: .
+      dockerfile: app/backend/Dockerfile
     ports:
       - "8000:8000"
     volumes:
       - ./data/processed:/app/data/processed:ro
-
-  frontend:
-    build: ./app/frontend
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
+      - ./models/checkpoints:/app/models/checkpoints:ro

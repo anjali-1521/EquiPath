@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EquiPath</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>EquiPath</h1>
+  <p>Explainable, equity-aware drug repurposing and interaction screening for rare diseases</p>
+  <nav>
+    <button id="tab-researcher" class="active">Researcher</button>
+    <button id="tab-clinician">Clinician</button>
+  </nav>
+</header>
+
+<main>
+<section id="view-researcher">
+  <div class="card">
+    <h2>Repurposing explorer</h2>
+    <div class="row">
+      <input id="disease-q" placeholder="Search diseases (try: Wilson, SCA3, Asherman, MRKH)" autocomplete="off">
+      <select id="disease-select"></select>
+    </div>
+    <div class="row">
+      <label>Neglect weight <output id="lam-out">0.25</output>
+        <input id="lam" type="range" min="0" max="1" step="0.05" value="0.25">
+      </label>
+      <button id="run-repurposing">Rank candidates</button>
+    </div>
+    <p class="hint">0 = pure model score. Higher values favour under-studied, untreated diseases; above ~0.5 it overcorrects.</p>
+  </div>
+  <div id="repurposing-result"></div>
+  <div class="card">
+    <h2>Equity audit</h2>
+    <p class="hint">Where do the top 100 disease-drug predictions go - with and without the neglect adjustment?</p>
+    <button id="run-equity">Run audit</button>
+    <div id="equity-result"></div>
+  </div>
+</section>
+
+<section id="view-clinician" hidden>
+  <div class="card">
+    <h2>Interaction screen</h2>
+    <label>Candidate drug
+      <input id="cand-q" placeholder="Search drugs" autocomplete="off">
+      <select id="cand-select"></select>
+    </label>
+    <label>Patient's current medications
+      <input id="med-q" placeholder="Search and add" autocomplete="off">
+      <select id="med-select"></select>
+      <button id="add-med">Add</button>
+    </label>
+    <ul id="med-list"></ul>
+    <button id="run-safety">Screen</button>
+  </div>
+  <div id="safety-result"></div>
+</section>
+</main>
+
+<footer>Research prototype. Outputs are computational hypotheses and screening scores, not medical advice.</footer>
+<script src="app.js"></script>
+</body>
+</html>

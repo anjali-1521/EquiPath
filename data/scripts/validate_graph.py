@@ -75,6 +75,18 @@ def check_disease_counts(graph: nx.MultiDiGraph) -> None:
         assert graph.degree(disease_id) > 0, f"Custom disease node is isolated: {disease_id}"
 
 
+def check_custom_nodes_in_main_component(graph: nx.MultiDiGraph) -> None:
+    """A custom disease with degree > 0 can still be stranded in a tiny island
+    (e.g. linked only to a duplicate custom gene), which no embedding can learn from."""
+    undirected = graph.to_undirected()
+    main_size = len(max(nx.connected_components(undirected), key=len))
+    for disease_id, name in CUSTOM_DISEASE_IDS.items():
+        size = len(nx.node_connected_component(undirected, disease_id))
+        assert size == main_size, (
+            f"{name} is in a disconnected component of size {size} (main component: {main_size})"
+        )
+
+
 def check_treats_edges(graph: nx.MultiDiGraph) -> dict[str, list[str]]:
     """Return, for each custom disease, the list of compounds with a
     Compound-treats-Disease edge into it, and assert this matches the
@@ -152,6 +164,8 @@ def main() -> None:
     print(f"  [OK] {EXPECTED_HETIONET_DISEASE_COUNT + EXPECTED_CUSTOM_DISEASE_COUNT} disease nodes "
           f"({EXPECTED_HETIONET_DISEASE_COUNT} Hetionet + {EXPECTED_CUSTOM_DISEASE_COUNT} custom), "
           "none isolated")
+    check_custom_nodes_in_main_component(graph)
+    print("  [OK] all custom disease nodes are in the main connected component")
     treats_by_disease = check_treats_edges(graph)
     print("  [OK] treats-edges match expectation "
           "(Wilson's: treated; SCA3/Asherman's/MRKH: untreated)")

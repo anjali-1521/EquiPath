@@ -11,4 +11,5 @@ scikit-learn
 # Application (Module 4)
 fastapi
 uvicorn[standard]
+httpx
 pydantic

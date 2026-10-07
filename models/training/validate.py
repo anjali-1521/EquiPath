@@ -39,7 +39,7 @@ def print_metrics_table() -> None:
     print("\n" + "=" * 60)
     print("MODEL METRICS SUMMARY")
     print("=" * 60)
-    for model_name in ["transe", "graphsage", "ddi"]:
+    for model_name in ["transe", "graphsage", "treats", "ddi"]:
         metrics_path = CHECKPOINTS / model_name / "metrics.json"
         if not metrics_path.exists():
             print(f"  {model_name}: not trained yet (run models/training/train.py)")

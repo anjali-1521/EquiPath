@@ -1,17 +1,11 @@
 """Drug repurposing candidate prediction for EquiPath.
 
-Uses the trained TransE embeddings (models/checkpoints/transe/), not
-GraphSAGE: TransE gives every relation - including CtD, "Compound treats
-Disease" - its own translation vector, so we can directly score "does
-translating this compound's embedding by the treats-vector land near this
-disease?" for every compound in the graph. GraphSAGE's embeddings have no
-such per-relation decoder (see graphsage.py's docstring), so they aren't a
-good fit for this specific, relation-specific question.
-
-For a target disease d, every compound c is scored by the TransE distance
-score(c, CtD, d) = -||e_c + e_CtD - e_d|| (higher = closer = more likely to
-treat), compounds already known to treat d are excluded, and the top-K
-remaining compounds are returned as repurposing candidates.
+Scores every compound for a disease with the supervised treatment head
+(models/prediction/treats_head.py), which is trained on TransE embeddings and
+beat TransE's raw CtD distance on held-out treatments (see that module for the
+numbers). If no head has been trained it falls back to the raw TransE distance
+score(c, CtD, d) = -||e_c + e_CtD - e_d||. Compounds already known to treat
+the disease are excluded and the top-K remaining are returned.
 
 This is the module's real payoff for the project's rare-disease framing:
 for the 3 diseases with no approved treatment (SCA3, Asherman's, MRKH), the
@@ -42,46 +36,20 @@ CUSTOM_DISEASES = {
 }
 
 
-def rank_repurposing_candidates(
-    disease_id: str,
-    graph,
-    entity_to_id: dict[str, int],
-    relation_to_id: dict[str, int],
-    entity_embeddings: np.ndarray,
-    relation_embeddings: np.ndarray,
-    top_k: int = 10,
-) -> list[dict]:
+def rank_repurposing_candidates(disease_id: str, graph, entity_to_id, relation_to_id, top_k: int = 10):
+    """Top-K untreated-by-record compounds for a disease, plus the scoring method used."""
+    from models.prediction.treats_head import full_score_matrix
+
     if disease_id not in entity_to_id:
         raise KeyError(f"Disease not in graph: {disease_id}")
-    if CTD_RELATION not in relation_to_id:
-        raise KeyError(f"Relation {CTD_RELATION} not in graph")
-
-    disease_vec = entity_embeddings[entity_to_id[disease_id]]
-    ctd_vec = relation_embeddings[relation_to_id[CTD_RELATION]]
-
     known_treaters = {
         u for u, v, data in graph.in_edges(disease_id, data=True) if data.get("metaedge") == CTD_RELATION
     }
-
-    compound_ids = [n for n, d in graph.nodes(data=True) if d.get("kind") == "Compound"]
-    candidates = [c for c in compound_ids if c not in known_treaters]
-
-    compound_indices = np.array([entity_to_id[c] for c in candidates])
-    compound_vecs = entity_embeddings[compound_indices]  # (num_candidates, dim)
-
-    scores = -np.linalg.norm(compound_vecs + ctd_vec - disease_vec, axis=1)
-
-    order = np.argsort(-scores)[:top_k]
-    results = []
-    for rank, idx in enumerate(order, start=1):
-        compound_id = candidates[idx]
-        results.append({
-            "rank": rank,
-            "compound_id": compound_id,
-            "compound_name": graph.nodes[compound_id].get("name", compound_id),
-            "score": float(scores[idx]),
-        })
-    return results
+    compounds = [n for n, d in graph.nodes(data=True) if d.get("kind") == "Compound" and n not in known_treaters]
+    scores, method = full_score_matrix(graph, entity_to_id, relation_to_id, [disease_id], compounds)
+    order = np.argsort(-scores[0])[:top_k]
+    return [{"rank": r, "compound_id": compounds[i], "compound_name": graph.nodes[compounds[i]].get("name"),
+             "score": float(scores[0][i])} for r, i in enumerate(order, start=1)], method
 
 
 def main() -> None:
@@ -96,18 +64,13 @@ def main() -> None:
     print("Loading graph, vocabulary, and TransE embeddings...")
     graph = load_merged_graph()
     entity_to_id, id_to_entity, relation_to_id, id_to_relation = build_vocab(graph)
-    entity_embeddings = np.load(TRANSE_DIR / "entity_embeddings.npy")
-    relation_embeddings = np.load(TRANSE_DIR / "relation_embeddings.npy")
-
     targets = list(CUSTOM_DISEASES) if args.disease == "all" else [args.disease]
 
     for disease_id in targets:
         name = CUSTOM_DISEASES.get(disease_id, graph.nodes.get(disease_id, {}).get("name", disease_id))
         print(f"\n=== Repurposing candidates for {name} [{disease_id}] ===")
-        results = rank_repurposing_candidates(
-            disease_id, graph, entity_to_id, relation_to_id,
-            entity_embeddings, relation_embeddings, top_k=args.top_k,
-        )
+        results, method = rank_repurposing_candidates(disease_id, graph, entity_to_id, relation_to_id, args.top_k)
+        print(f"  (scoring: {method})")
         for r in results:
             print(f"  #{r['rank']:>2}  {r['compound_name']:<40} score={r['score']:.4f}  [{r['compound_id']}]")
 

@@ -36,9 +36,14 @@ def build_vocab(
     Node/relation -> id assignment is deterministic (sorted order), so
     re-running without a cache reproduces the exact same mapping.
     """
+    cached = None
     if use_cache and VOCAB_PATH.exists():
         with open(VOCAB_PATH) as f:
             cached = json.load(f)
+        if set(cached["entity_to_id"]) != set(graph.nodes()):
+            cached = None  # graph changed since the cache was written
+
+    if cached is not None:
         entity_to_id = cached["entity_to_id"]
         relation_to_id = cached["relation_to_id"]
     else:

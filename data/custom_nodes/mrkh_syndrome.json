@@ -15,11 +15,11 @@
   },
   "supporting_nodes": [
     {
-      "id": "Gene::SYMBOL:WNT4",
+      "id": "Gene::54361",
       "name": "WNT4",
       "kind": "Gene",
-      "source": "custom",
-      "notes": "CANDIDATE gene, not a confirmed monogenic cause. WNT4 variants have been reported in only a small subset of MRKH cases (some associated with a hyperandrogenism variant), and most individuals with MRKH have no identified WNT4 mutation. Included here as an evidence-based candidate association, explicitly flagged as unconfirmed rather than causal."
+      "source": "hetionet_existing",
+      "notes": "Reused directly from Hetionet v1.0 (Entrez Gene ID 54361), so the custom disease connects to the gene's existing neighbourhood (pathways, processes, interactions) instead of an isolated duplicate node. CANDIDATE gene, not a confirmed monogenic cause. WNT4 variants have been reported in only a small subset of MRKH cases (some associated with a hyperandrogenism variant), and most individuals with MRKH have no identified WNT4 mutation. Included here as an evidence-based candidate association, explicitly flagged as unconfirmed rather than causal."
     },
     {
       "id": "Anatomy::UBERON:0000995",
@@ -39,7 +39,7 @@
   "edges": [
     {
       "source": "Disease::CUSTOM:mrkh_syndrome",
-      "target": "Gene::SYMBOL:WNT4",
+      "target": "Gene::54361",
       "metaedge": "DaG",
       "type": "associates",
       "description": "Disease - associates - Gene",

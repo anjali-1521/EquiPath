@@ -15,17 +15,17 @@
   },
   "supporting_nodes": [
     {
-      "id": "Gene::SYMBOL:ATXN3",
+      "id": "Gene::4287",
       "name": "ATXN3",
       "kind": "Gene",
-      "source": "custom",
-      "notes": "Ataxin-3, a ubiquitin hydrolase (deubiquitinase). CAG-repeat expansion in the coding region (>52 repeats in affected individuals, vs up to 44 in unaffected) causes an expanded polyglutamine tract. Located on chromosome 14q32.1."
+      "source": "hetionet_existing",
+      "notes": "Reused directly from Hetionet v1.0 (Entrez Gene ID 4287), so the custom disease connects to the gene's existing neighbourhood (pathways, processes, interactions) instead of an isolated duplicate node. Ataxin-3, a ubiquitin hydrolase (deubiquitinase). CAG-repeat expansion in the coding region (>52 repeats in affected individuals, vs up to 44 in unaffected) causes an expanded polyglutamine tract. Located on chromosome 14q32.1."
     }
   ],
   "edges": [
     {
       "source": "Disease::CUSTOM:sca3",
-      "target": "Gene::SYMBOL:ATXN3",
+      "target": "Gene::4287",
       "metaedge": "DaG",
       "type": "associates",
       "description": "Disease - associates - Gene",
